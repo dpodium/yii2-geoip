@@ -1,0 +1,27 @@
+{
+    "name": "dpodium/yii2-geoip",
+    "description": "Yii2 Component to allow for easy usage of the MaxMind Free dbs.",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","geoip","maxmind"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sionghuat Chng",
+            "email": "sionghuat.chng@dpodium.com",
+            "homepage": "http://www.dpodium.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "support": {
+        "source": "https://github.com/dpodium/yii2-geoip",
+        "issues": "https://github.com/dpodium/yii2-geoip/issues"
+    },
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "dpodium\\yii2\\geoip\\": ""
+        }
+    }
+}
