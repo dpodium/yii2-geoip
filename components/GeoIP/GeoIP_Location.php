@@ -49,7 +49,7 @@
  * @link     http://pear.php.net/package/GeoIP
  * @see      GeoIP::lookupLocation()
  */
-namespace app\components\GeoIP;
+namespace dpodium\yii2\geoip\components\GeoIP;
 use Yii;
 use yii\rest\Serializer;
 

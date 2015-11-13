@@ -31,7 +31,7 @@ namespace dpodium\yii2\geoip\components;
 use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
-use app\components\GeoIP;
+use dpodium\yii2\geoip\components\GeoIP;
 
 class CGeoIP extends Component {
 

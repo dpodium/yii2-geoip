@@ -122,10 +122,10 @@
  * @link     http://pear.php.net/package/GeoIP
  */
 
-namespace app\components;
+namespace dpodium\yii2\geoip\components;
 use yii\base\Exception;
-use app\components\GeoIP\GeoIP_Location;
-use app\components\GeoIP\GeoIP_CRN;
+use dpodium\yii2\geoip\components\GeoIP\GeoIP_Location;
+use dpodium\yii2\geoip\components\GeoIP\GeoIP_CRN;
 
 
 class GeoIP {

@@ -46,7 +46,7 @@
  * @link     http://pear.php.net/package/GeoIP
  */
 
-namespace app\components\GeoIP;
+namespace dpodium\yii2\geoip\components\GeoIP;
 use Yii;
 class GeoIP_CRN {
 
