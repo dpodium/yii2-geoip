@@ -12,13 +12,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require geoip/yii2-geoip "*"
+php composer.phar require dpodium/yii2-geoip "*"
 ```
 
 or add
 
 ```
-"geoip/yii2-geoip": "*"
+"dpodium/yii2-geoip": "*"
 ```
 
 to the require section of your `composer.json` file.
