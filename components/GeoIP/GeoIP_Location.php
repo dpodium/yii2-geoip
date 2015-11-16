@@ -51,9 +51,8 @@
  */
 namespace dpodium\yii2\geoip\components\GeoIP;
 use Yii;
-use yii\rest\Serializer;
 
-class GeoIP_Location extends Serializer {
+class GeoIP_Location {
 
   protected $aData = array(
       'countryCode' => null,
@@ -110,7 +109,7 @@ class GeoIP_Location extends Serializer {
    * @return array
    */
   public function serialize() {
-    return serialize($this->aData);
+    return \yii\rest\Serializer::serialize($this->aData);
   }
 
   /**
