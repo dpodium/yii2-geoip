@@ -23,7 +23,7 @@
 /**
  * CGeoip class file.
  *
- * @author Hoang Xuan Phi <phi.qtmax@gmail.com> 
+ * @author Hoang Xuan Phi <phi.qtmax@gmail.com>
  * @link http://www.yiiframework.com/
  * @version 0.1
  */
@@ -56,6 +56,8 @@ class CGeoIP extends Component {
   }
 
   public function lookupLocation($ip=null) {
+    $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoLiteCity.dat';
+    self::$geoip = GeoIP::getInstance($this->filename, self::$flags);
     $ip = $this->_getIP($ip);
     return self::$geoip->lookupLocation($ip);
   }
@@ -71,11 +73,15 @@ class CGeoIP extends Component {
   }
 
   public function lookupOrg($ip=null) {
+    //$this->filename = dirname(__DIR__) . '/components/GeoIP/GeoLiteCity.dat';
+    //self::$geoip = GeoIP::getInstance($this->filename, self::$flags);
     $ip = $this->_getIP($ip);
     return self::$geoip->lookupOrg($ip);
   }
 
   public function lookupRegion($ip=null) {
+    //$this->filename = dirname(__DIR__) . '/components/GeoIP/GeoLiteCity.dat';
+    //self::$geoip = GeoIP::getInstance($this->filename, self::$flags);
     $ip = $this->_getIP($ip);
     return self::$geoip->lookupRegion($ip);
   }

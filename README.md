@@ -45,9 +45,12 @@ Usage
 _____
 All methods accept an IP address as an argument. If no argument is supplied Yii::$app->getRequest()->getUserIP() is used.
 
+    //Along with free DB
     $location = Yii::$app->geoip->lookupLocation();
     $countryCode = Yii::$app->geoip->lookupCountryCode();
     $countryName = Yii::$app->geoip->lookupCountryName();
+
+    //Required Paid DB
     $org = Yii::$app->geoip->lookupOrg();
     $regionCode = Yii::$app->geoip->lookupRegion();
 
