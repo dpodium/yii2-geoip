@@ -819,8 +819,9 @@ class GeoIP {
     if ($str_length > 0) {
       $record->region = substr($record_buf, $record_buf_pos, $str_length);
       $record->regionName = GeoIP_CRN::getRegionName($record->countryCode, $record->region);
-      $record->timeZone = GeoIP_Timezone::getTimezone($record->countryCode, $record->region);
     }
+    $record->timeZone = GeoIP_Timezone::getTimezone($record->countryCode, $record->region);
+
     $record_buf_pos += $str_length + 1;
     $str_length = 0;
 

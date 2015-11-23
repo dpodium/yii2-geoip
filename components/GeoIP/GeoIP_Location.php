@@ -65,7 +65,8 @@ class GeoIP_Location {
       'latitude' => null,
       'longitude' => null,
       'areaCode' => null,
-      'dmaCode' => null
+      'dmaCode' => null,
+      'timeZone' => null
   );
 
   /**

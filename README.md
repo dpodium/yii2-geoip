@@ -67,5 +67,6 @@ Location attributes:
     $location->longitude
     $location->areaCode
     $location->dmaCode
+    $location->timeZone
 
 
