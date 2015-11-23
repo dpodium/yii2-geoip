@@ -123,6 +123,7 @@
  */
 
 namespace dpodium\yii2\geoip\components;
+use dpodium\yii2\geoip\components\GeoIP\GeoIP_Timezone;
 use yii\base\Exception;
 use dpodium\yii2\geoip\components\GeoIP\GeoIP_Location;
 use dpodium\yii2\geoip\components\GeoIP\GeoIP_CRN;
@@ -818,6 +819,7 @@ class GeoIP {
     if ($str_length > 0) {
       $record->region = substr($record_buf, $record_buf_pos, $str_length);
       $record->regionName = GeoIP_CRN::getRegionName($record->countryCode, $record->region);
+      $record->timeZone = GeoIP_Timezone::getTimezone($record->countryCode, $record->region);
     }
     $record_buf_pos += $str_length + 1;
     $str_length = 0;
