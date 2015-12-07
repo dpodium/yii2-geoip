@@ -41,7 +41,6 @@ class CGeoIP extends Component {
   protected static $geoip;
 
   public function init() {
-    $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoIP.dat';
     switch($this->mode) {
       case 'MEMORY_CACHE':
         self::$flags = GeoIP::MEMORY_CACHE;
@@ -50,24 +49,39 @@ class CGeoIP extends Component {
         self::$flags = GeoIP::STANDARD;
         break;
     }
-    self::$geoip = GeoIP::getInstance($this->filename, self::$flags);
     // Run parent
     parent::init();
   }
 
   public function lookupLocation($ip=null) {
-    $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoLiteCity.dat';
+    if((strpos($ip, ":") === false)) {
+      $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoLiteCity.dat';
+    } else {
+      $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoLiteCityv6.dat';
+    }
     self::$geoip = GeoIP::getInstance($this->filename, self::$flags);
     $ip = $this->_getIP($ip);
     return self::$geoip->lookupLocation($ip);
   }
 
   public function lookupCountryCode($ip=null) {
+    if((strpos($ip, ":") === false)) {
+      $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoIP.dat';
+    } else {
+      $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoIPv6.dat';
+    }
+    self::$geoip = GeoIP::getInstance($this->filename, self::$flags);
     $ip = $this->_getIP($ip);
     return self::$geoip->lookupCountryCode($ip);
   }
 
   public function lookupCountryName($ip=null) {
+    if((strpos($ip, ":") === false)) {
+      $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoIP.dat';
+    } else {
+      $this->filename = dirname(__DIR__) . '/components/GeoIP/GeoIPv6.dat';
+    }
+    self::$geoip = GeoIP::getInstance($this->filename, self::$flags);
     $ip = $this->_getIP($ip);
     return self::$geoip->lookupCountryName($ip);
   }
