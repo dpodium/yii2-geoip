@@ -102,9 +102,43 @@ class CGeoIP extends Component {
 
   protected function _getIP($ip=null) {
     if ($ip === null) {
-      $ip = Yii::$app->getRequest()->getUserIP();
+      $ip = $this->getIPAddress();
     }
     return $ip;
+  }
+
+  protected function getIPAddress() {
+    if (isset($_SERVER)) {
+      if (isset($_SERVER['HTTP_TRUE_CLIENT_IP'])) {
+        return $_SERVER['HTTP_TRUE_CLIENT_IP'];
+      }
+
+      if (isset($_SERVER['HTTP_X_FORWARDED_FOR']) && ($_SERVER['HTTP_X_FORWARDED_FOR'] != '')) {
+        //get IP start from last element
+        if (isset($_SERVER['HTTP_X_AMZ_CF_ID']) && ($_SERVER['HTTP_X_AMZ_CF_ID'] != '')) {
+          //if detect cloudfront CDN in use.
+          $ip_array = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        } else {
+          $ip_array = array_reverse(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
+        }
+        foreach ($ip_array as $ip) {
+          // trim for safety measures
+          $ip = trim($ip);
+          // attempt to validate IP
+          if (self::_validateIp($ip)) {
+            return $ip;
+          }
+        }
+      }
+
+      return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : false;
+    } else {
+      $ip = getenv('HTTP_TRUE_CLIENT_IP');
+      if (self::_validateIp($ip)) {
+        return $ip;
+      }
+      return getenv('REMOTE_ADDR');
+    }
   }
 
 }
