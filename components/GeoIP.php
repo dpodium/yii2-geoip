@@ -939,7 +939,8 @@ class GeoIP
      */
     public function lookupCountryCode($addr)
     {
-        return self::$COUNTRY_CODES[$this->lookupCountryId($addr)];
+        $countryCode = (isset(self::$COUNTRY_CODES[$this->lookupCountryId($addr)]) ? self::$COUNTRY_CODES[$this->lookupCountryId($addr)] : '');
+        return (!empty($countryCode) ? $countryCode : '-1');
     }
 
     /**
@@ -1242,7 +1243,7 @@ class GeoIP
         $record_buf_pos = 0;
         $char = ord(substr($record_buf, $record_buf_pos, 1));
 
-        $record->countryCode = self::$COUNTRY_CODES[$char];
+        $record->countryCode = (isset(self::$COUNTRY_CODES[$char]) && !empty(self::$COUNTRY_CODES[$char]) ? self::$COUNTRY_CODES[$char] : '-1');
         $record->countryCode3 = self::$COUNTRY_CODES3[$char];
         $record->countryName = self::$COUNTRY_NAMES[$char];
         $record->continentCode = self::$CONTINENT_CODES[$char];
