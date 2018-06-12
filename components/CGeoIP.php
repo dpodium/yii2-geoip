@@ -13,6 +13,8 @@ class CGeoIP extends Component {
     
     public $countryDbPath = '@vendor/dpodium/yii2-geoip/components/db/GeoLite2-Country.mmdb';
     
+    protected $previous_exception = null;
+    
     public function init() {
         parent::init();
         $this->cityDbPath = Yii::getAlias($this->cityDbPath);
@@ -30,14 +32,24 @@ class CGeoIP extends Component {
 
     protected function lookupLocationWithCityDb($ip) {
         $reader = new Reader($this->cityDbPath);
-        $record = $reader->city($ip);
-        return $this->populateRecord($record);
+        try {
+            $record = $reader->city($ip);
+            return $this->populateRecord($record);
+        } catch (\Exception $ex) {
+            $this->previous_exception = $ex;
+            return null;
+        }
     }
 
     protected function lookupLocationWithCountryDb($ip) {
         $reader = new Reader($this->countryDbPath);
-        $record = $reader->country($ip);
-        return $this->populateRecord($record);
+        try {
+            $record = $reader->country($ip);
+            return $this->populateRecord($record);
+        } catch (\Exception $ex) {
+            $this->previous_exception = $ex;
+            return null;
+        }
     }
     
     protected function populateRecord($record) {
@@ -122,4 +134,9 @@ class CGeoIP extends Component {
         return false;
     }
 
+    public function getPreviousException() {
+        $ex = $this->previous_exception;
+        unset($this->previous_exception);
+        return $ex;
+    }
 }
