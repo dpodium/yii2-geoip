@@ -29,7 +29,6 @@ Version ~2.0.0 uses the new GeoLite2 version of the db instead of the Legacy Geo
 
 Database can be found here: [https://dev.maxmind.com/geoip/geoip2/geolite2/](https://dev.maxmind.com/geoip/geoip2/geolite2/)
 
-
 Component Setup
 -----
 Once the extension is installed, simply modify your application configuration as follows:
@@ -39,7 +38,6 @@ return [
     ...
         'geoip' => [
                    'class' => 'dpodium\yii2\geoip\components\CGeoIP',
-                   'cityDbPath' => '/path/to/maxmind/citydb', //Optional, will be parsed with Yii::getAlias
                ],
         ...
     ],
@@ -47,13 +45,12 @@ return [
 ];
 ```
 
-If cityDbPath is configured, the City db will be used by the extension to query the IP and get full data. Otherwise, the extension will
-use the default Country db which is shipped along with this extension to do the query, but only partial data will be available.
+If querying full City data is required, yii2-geoip-city-db must be required as well, see [dpodium/yii2-geoip-city-db](https://github.com/dpodium/yii2-geoip-city-db).
 
 For more information on the data availability, see below.
 
 Usage
-_____
+-----
 All methods accept an IP address as an argument. If no argument is supplied Yii::$app->getRequest()->getUserIP() is used.
 
     //Along with free DB
@@ -63,12 +60,12 @@ All methods accept an IP address as an argument. If no argument is supplied Yii:
 
 Location attributes:
 
-    $location->countryCode
-    $location->countryName
-    $location->continentCode
-    $location->continentName
-    $location->city
-    $location->postalCode
-    $location->latitude
-    $location->longitude
-    $location->timeZone
+    $location->countryCode //Available in both Country and City DB
+    $location->countryName //Available in both Country and City DB
+    $location->continentCode //Available in both Country and City DB
+    $location->continentName //Available in both Country and City DB
+    $location->city //Available in only City DB
+    $location->postalCode //Available in only City DB
+    $location->latitude //Available in only City DB
+    $location->longitude //Available in only City DB
+    $location->timeZone //Available in only City DB

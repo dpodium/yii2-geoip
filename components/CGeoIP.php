@@ -8,22 +8,20 @@ use Yii;
 use yii\base\Component;
 
 class CGeoIP extends Component {
-
-    public $cityDbPath;
-
+    
+    public $cityDbPath = '@vendor/dpodium/yii2-geoip-city-db/db/GeoLite2-City.mmd';
+    
+    public $countryDbPath = '@vendor/dpodium/yii2-geoip/components/db/GeoLite2-Country.mmdb';
+    
     public function init() {
         parent::init();
-        if (!empty($this->cityDbPath)) {
-            $this->cityDbPath = Yii::getAlias($this->cityDbPath);
-            if (empty($this->cityDbPath)) {
-                throw new \yii\base\InvalidConfigException('City DB does not exist at ' . $this->cityDbPath);
-            }
-        }
+        $this->cityDbPath = Yii::getAlias($this->cityDbPath);
+        $this->countryDbPath = Yii::getAlias($this->countryDbPath);
     }
 
     public function lookupLocation($ip = null) {
         $ip = $this->_getIP($ip);
-        if (!empty($this->cityDbPath)) {
+        if (file_exists($this->cityDbPath)) {
             return $this->lookupLocationWithCityDb($ip);
         } else {
             return $this->lookupLocationWithCountryDb($ip);
@@ -37,7 +35,7 @@ class CGeoIP extends Component {
     }
 
     protected function lookupLocationWithCountryDb($ip) {
-        $reader = new Reader(Yii::getAlias('@vendor/dpodium/yii2-geoip/components/GeoIP/GeoLite2-Country.mmdb'));
+        $reader = new Reader($this->countryDbPath);
         $record = $reader->country($ip);
         return $this->populateRecord($record);
     }
@@ -49,11 +47,11 @@ class CGeoIP extends Component {
                 'countryName' => $record->country->name,
                 'continentCode' => $record->continent->code,
                 'continentName' => $record->continent->name,
-                'city' => isset($record->city->name) ? $record->city->name : null,
-                'postalCode' => isset($record->postal->code) ? $record->postal->code : null,
-                'latitude' => isset($record->location->latitude) ? $record->location->latitude : null,
-                'longitude' => isset($record->location->longitude) ? $record->location->longitude : null,
-                'timeZone' => isset($record->location->timeZone) ? $record->location->timeZone : null,
+                'city' => isset($record->city) ? $record->city->name : null,
+                'postalCode' => isset($record->postal) ? $record->postal->code : null,
+                'latitude' => isset($record->location) ? $record->location->latitude : null,
+                'longitude' => isset($record->location) ? $record->location->longitude : null,
+                'timeZone' => isset($record->location) ? $record->location->timeZone : null,
             ]);
             return $location;
         } else {
