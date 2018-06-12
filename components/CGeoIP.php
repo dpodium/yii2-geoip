@@ -9,7 +9,7 @@ use yii\base\Component;
 
 class CGeoIP extends Component {
     
-    public $cityDbPath = '@vendor/dpodium/yii2-geoip-city-db/db/GeoLite2-City.mmd';
+    public $cityDbPath = '@vendor/dpodium/yii2-geoip-city-db/db/GeoLite2-City.mmdb';
     
     public $countryDbPath = '@vendor/dpodium/yii2-geoip/components/db/GeoLite2-Country.mmdb';
     
