@@ -136,7 +136,7 @@ class CGeoIP extends Component {
 
     public function getPreviousException() {
         $ex = $this->previous_exception;
-        unset($this->previous_exception);
+        $this->previous_exception = null;
         return $ex;
     }
 }
