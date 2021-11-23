@@ -12,6 +12,8 @@ class CGeoIP extends Component {
     public $cityDbPath = '@vendor/dpodium/yii2-geoip-city-db/db/GeoLite2-City.mmdb';
     
     public $countryDbPath = '@vendor/dpodium/yii2-geoip/components/db/GeoLite2-Country.mmdb';
+
+    public $support_ipv6 = false;
     
     protected $previous_exception = null;
     
@@ -108,7 +110,7 @@ class CGeoIP extends Component {
                     // trim for safety measures
                     $ip = trim($ip);
                     // attempt to validate IP
-                    if (self::_validateIp($ip)) {
+                    if ($this->_validateIp($ip)) {
                         return $ip;
                     }
                 }
@@ -117,16 +119,20 @@ class CGeoIP extends Component {
             return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : false;
         } else {
             $ip = getenv('HTTP_TRUE_CLIENT_IP');
-            if (self::_validateIp($ip)) {
+            if ($this->_validateIp($ip)) {
                 return $ip;
             }
             return getenv('REMOTE_ADDR');
         }
     }
 
-    private static function _validateIp($ip) {
+    protected function _validateIp($ip) {
+        $filter_var_flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+        if ($this->support_ipv6) {
+            $filter_var_flags = FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+        }
         if ($ip) {
-            if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) === false) {
+            if (filter_var($ip, FILTER_VALIDATE_IP, $filter_var_flags) === false) {
                 return false;
             }
             return true;

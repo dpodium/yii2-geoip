@@ -37,8 +37,9 @@ return [
     'components' => [
     ...
         'geoip' => [
-                   'class' => 'dpodium\yii2\geoip\components\CGeoIP',
-               ],
+            'class' => 'dpodium\yii2\geoip\components\CGeoIP',
+            'support_ipv6' => false, //Default value
+        ],
         ...
     ],
     ...
