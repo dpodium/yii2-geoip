@@ -127,9 +127,9 @@ class CGeoIP extends Component {
     }
 
     protected function _validateIp($ip) {
-        $filter_var_flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+        $filter_var_flags = FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
         if ($this->support_ipv6) {
-            $filter_var_flags = FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+            $filter_var_flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
         }
         if ($ip) {
             if (filter_var($ip, FILTER_VALIDATE_IP, $filter_var_flags) === false) {
